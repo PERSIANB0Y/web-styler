@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#09090c">
+    <meta name="description" content="auto-theme.js — a single-file, class-free theming layer for any HTML page.">
+    <title>auto-theme.js · Documentation</title>
+
+    <!-- The library itself — this page is styled BY it -->
+    <script src="auto-theme.js"></script>
+
+    <!-- A few enhancements just for this doc page -->
+    <style>
+        [data-code] {
+            position: relative;
+            margin: 0 0 18px;
+        }
+
+        [data-code] pre {
+            padding-top: 46px !important;
+        }
+
+        [data-code]>button {
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
+            inset-inline-end: 8px !important;
+            min-height: 26px !important;
+            height: 26px !important;
+            width: auto !important;
+            padding: 0 10px !important;
+            font-size: 10px !important;
+            font-weight: 600 !important;
+            line-height: 1 !important;
+            border-radius: 8px !important;
+            background: var(--surface-hover) !important;
+            color: var(--muted) !important;
+            border: 1px solid var(--border) !important;
+            transform: none !important;
+            box-shadow: none !important;
+            cursor: pointer !important;
+        }
+
+        [data-code]>button:hover {
+            background: var(--red) !important;
+            color: #fff !important;
+        }
+
+        [data-code]>button[data-copied] {
+            background: #2f8f5f !important;
+            color: #fff !important;
+        }
+
+        html[dir="rtl"] [data-code]>button {
+            right: auto !important;
+            left: 8px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============ HEADER ============ -->
+    <header>
+        <a href="#top">
+            <strong>A.</strong>&nbsp;AUTO-THEME
+        </a>
+
+        <nav>
+            <a href="#install">Install</a>
+            <a href="#usage">Usage</a>
+            <a href="#mapping">Element mapping</a>
+            <a href="#api">API</a>
+            <a href="#customize">Customize</a>
+            <a href="#demo">Demo</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+
+        <div>
+            <a href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+    </header>
+
+
+    <main id="top">
+
+        <!-- ============ HERO ============ -->
+        <section>
+            <span>DROP-IN · CLASS-FREE · ZERO DEPENDENCIES</span>
+
+            <h1>auto-theme.js</h1>
+
+            <h2>A theming layer that just knows what your tags mean.</h2>
+
+            <p>
+                One script tag turns any plain HTML page into a polished,
+                dark/light-aware interface — no classes, no IDs, no CSS file
+                to maintain. Drop it in, ship it, forget it.
+            </p>
+
+            <div>
+                <a href="#install" role="button">Get started</a>
+                <a href="example.html" download>Download example</a>
+            </div>
+
+            <p>
+                <small>
+                    v1.0 · ~12&nbsp;KB unminified · zero dependencies ·
+                    works with your existing CSS
+                </small>
+            </p>
+        </section>
+
+
+        <!-- ============ INSTALL ============ -->
+        <section id="install">
+            <span>INSTALLATION</span>
+            <h2>One file, one line</h2>
+
+            <p>
+                Copy <code>auto-theme.js</code> next to your HTML file and
+                reference it from the <code>&lt;head&gt;</code>:
+            </p>
+
+            <div data-code>
+                <pre><code>&lt;script src="auto-theme.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
+
+            <p>
+                That's it. A floating theme toggle appears bottom-right,
+                the design system is injected, and every element on the page
+                gets classified and styled automatically.
+            </p>
+
+            <h3>Placement matters</h3>
+
+            <ul>
+                <li>
+                    Put the script <strong>inside <code>&lt;head&gt;</code></strong>
+                    so the theme is applied before first paint — no flash of
+                    unstyled content.
+                </li>
+                <li>
+                    It is <strong>safe to move to the end of <code>&lt;body&gt;</code></strong>
+                    — the script waits for <code>DOMContentLoaded</code>.
+                </li>
+                <li>
+                    No build step, no module loader, no <code>type="module"</code>
+                    needed. It's a classic IIFE that attaches to
+                    <code>window.AutoTheme</code>.
+                </li>
+            </ul>
+        </section>
+
+
+        <!-- ============ USAGE ============ -->
+        <section id="usage">
+            <span>QUICK START</span>
+            <h2>The smallest possible page</h2>
+
+            <p>
+                Write ordinary, semantic HTML. The library figures out the
+                rest — sticky header, responsive grid, card shapes, hero
+                layout, eyebrow labels, and so on.
+            </p>
+
+            <div data-code>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;My site&lt;/title&gt;
+    &lt;script src="auto-theme.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;header&gt;
+        &lt;strong&gt;My Site&lt;/strong&gt;
+        &lt;nav&gt;
+            &lt;a href="#home"&gt;Home&lt;/a&gt;
+            &lt;a href="#about"&gt;About&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;section id="home"&gt;
+            &lt;h1&gt;Hello, world&lt;/h1&gt;
+            &lt;p&gt;This page has zero CSS files.&lt;/p&gt;
+        &lt;/section&gt;
+
+        &lt;section id="about"&gt;
+            &lt;span&gt;ABOUT&lt;/span&gt;
+            &lt;h2&gt;A little about me&lt;/h2&gt;
+
+            &lt;div&gt;
+                &lt;article&gt;Card one&lt;/article&gt;
+                &lt;article&gt;Card two&lt;/article&gt;
+                &lt;article&gt;Card three&lt;/article&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;small&gt;© 2026&lt;/small&gt;
+    &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <p>
+                Open it in a browser — the layout, colors, hero, cards,
+                grid, eyebrow, and footer are all automatic.
+            </p>
+        </section>
+
+
+        <!-- ============ MAPPING ============ -->
+        <section id="mapping">
+            <span>HOW IT WORKS</span>
+            <h2>What each tag becomes</h2>
+
+            <p>
+                The library scans your DOM once, tags every relevant element
+                with a <code>data-ui</code> attribute, and lets the injected
+                CSS take over. Nothing about your markup is rewritten —
+                attributes are added, never removed.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>You write</th>
+                        <th>Tagged as</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>header</code></td>
+                        <td><code>data-ui="header"</code></td>
+                        <td>Sticky frosted-glass bar</td>
+                    </tr>
+                    <tr>
+                        <td><code>nav</code></td>
+                        <td><code>data-ui="nav"</code></td>
+                        <td>Horizontal menu</td>
+                    </tr>
+                    <tr>
+                        <td><code>nav a</code>, <code>header a</code></td>
+                        <td><code>data-ui="nav-link"</code></td>
+                        <td>Muted link with red hover</td>
+                    </tr>
+                    <tr>
+                        <td><code>main &gt; section</code></td>
+                        <td><code>data-ui="section"</code></td>
+                        <td>Centered container + padding</td>
+                    </tr>
+                    <tr>
+                        <td>First section containing <code>h1</code></td>
+                        <td><code>data-ui="hero"</code></td>
+                        <td>Big centered hero block</td>
+                    </tr>
+                    <tr>
+                        <td>Short ALL-CAPS element before <code>h1</code>/<code>h2</code></td>
+                        <td><code>data-ui="eyebrow"</code></td>
+                        <td>Small red uppercase label</td>
+                    </tr>
+                    <tr>
+                        <td><code>article</code>, <code>figure</code>, <code>aside</code>, <code>blockquote</code>,
+                            <code>details</code></td>
+                        <td><code>data-ui="card"</code></td>
+                        <td>Rounded bordered card</td>
+                    </tr>
+                    <tr>
+                        <td>Wrapper <code>div</code>/<code>ul</code> whose only children are cards</td>
+                        <td><code>data-ui="grid"</code></td>
+                        <td>Responsive auto-fit grid</td>
+                    </tr>
+                    <tr>
+                        <td><code>button</code>, <code>input[type=submit]</code>, <code>a[role="button"]</code></td>
+                        <td><code>data-ui="button"</code></td>
+                        <td>Pill button</td>
+                    </tr>
+                    <tr>
+                        <td><code>a[download]</code></td>
+                        <td><code>data-ui="button"</code> + <code>data-variant="secondary"</code></td>
+                        <td>Outlined pill button</td>
+                    </tr>
+                    <tr>
+                        <td><code>footer</code></td>
+                        <td><code>data-ui="footer"</code></td>
+                        <td>Bordered footer row</td>
+                    </tr>
+                    <tr>
+                        <td><code>dialog</code>, <code>[role="dialog"]</code></td>
+                        <td><code>data-ui="modal"</code></td>
+                        <td>Rounded modal + backdrop blur</td>
+                    </tr>
+                    <tr>
+                        <td><em>auto-injected</em></td>
+                        <td><code>data-ui="ambient"</code></td>
+                        <td>Background radial gradient</td>
+                    </tr>
+                    <tr>
+                        <td><em>auto-injected</em></td>
+                        <td><code>data-ui="noise"</code></td>
+                        <td>SVG noise texture overlay</td>
+                    </tr>
+                    <tr>
+                        <td><em>auto-injected</em></td>
+                        <td><code>data-ui="theme-toggle"</code></td>
+                        <td>Floating dark/light switch</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Opting out or overriding</h3>
+
+            <p>
+                Already tagged something manually? The classifier never
+                overwrites an existing <code>data-ui</code> attribute — so
+                you can force a specific role:
+            </p>
+
+            <div data-code>
+                <pre><code>&lt;!-- Always a card, even if it's a div --&gt;
+&lt;div data-ui="card"&gt;Custom card&lt;/div&gt;
+
+&lt;!-- Force a secondary button --&gt;
+&lt;button data-variant="secondary"&gt;Cancel&lt;/button&gt;</code></pre>
+            </div>
+
+            <p>
+                Want to <em>exclude</em> an element from all styling? Use
+                <code>data-ui="none"</code> — or just wrap it in a shadow root.
+            </p>
+        </section>
+
+
+        <!-- ============ API ============ -->
+        <section id="api">
+            <span>REFERENCE</span>
+            <h2>JavaScript API</h2>
+
+            <p>
+                Everything lives on <code>window.AutoTheme</code>. All methods
+                are synchronous and safe to call at any time.
+            </p>
+
+            <h3>Methods</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>What it does</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>AutoTheme.apply()</code></td>
+                        <td>Re-apply the current theme (after manual changes).</td>
+                    </tr>
+                    <tr>
+                        <td><code>AutoTheme.refresh()</code></td>
+                        <td>Re-scan the DOM and tag new elements.</td>
+                    </tr>
+                    <tr>
+                        <td><code>AutoTheme.set('dark')</code></td>
+                        <td>Force a specific theme: <code>"dark"</code>, <code>"light"</code>, or <code>"system"</code>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>AutoTheme.toggle()</code></td>
+                        <td>Flip between dark and light.</td>
+                    </tr>
+                    <tr>
+                        <td><code>AutoTheme.mode</code></td>
+                        <td><em>Getter</em> — the current mode (<code>"system"</code> by default).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Examples</h3>
+
+            <div data-code>
+                <pre><code>// Force light mode and remember it
+AutoTheme.set("light");
+
+// Follow the OS again
+AutoTheme.set("system");
+
+// Toggle from a custom button
+document.querySelector("#my-btn").onclick = () =&gt; AutoTheme.toggle();
+
+// Re-scan after injecting HTML
+container.innerHTML = "&lt;article&gt;New card&lt;/article&gt;";
+AutoTheme.refresh();
+
+// Read the mode
+console.log(AutoTheme.mode); // "system" | "dark" | "light"</code></pre>
+            </div>
+
+            <h3>Framework integration</h3>
+
+            <p>
+                In React, Vue, Svelte, or any framework that swaps DOM nodes,
+                call <code>AutoTheme.refresh()</code> after mount or route
+                change. A <code>MutationObserver</code> already handles
+                most cases — but calling explicitly is cheap and reliable.
+            </p>
+
+            <div data-code>
+                <pre><code>// React
+useEffect(() =&gt; {
+    window.AutoTheme?.refresh();
+}, [route]);
+
+// Vue
+onMounted(() =&gt; window.AutoTheme?.refresh());
+
+// Svelte
+onMount(() =&gt; window.AutoTheme?.refresh());</code></pre>
+            </div>
+        </section>
+
+
+        <!-- ============ CUSTOMIZE ============ -->
+        <section id="customize">
+            <span>CUSTOMIZATION</span>
+            <h2>Make it yours</h2>
+
+            <h3>Recolor everything</h3>
+
+            <p>
+                The entire palette flows from CSS custom properties. Override
+                any of them — the whole UI follows, including the injected
+                modal, form controls, and hover states.
+            </p>
+
+            <div data-code>
+                <pre><code>&lt;style&gt;
+:root {
+    --red:        #00d4ff;   /* accent */
+    --red-light:  #33e0ff;   /* hover accent */
+    --red-dark:   #0088aa;
+
+    --bg:         #05070a;
+    --surface:    #0e1117;
+    --text:       #e6f2ff;
+
+    --radius:     24px;      /* bigger cards */
+    --container:  1200px;    /* wider page */
+}
+
+html[data-theme="light"] {
+    --bg:      #f0f9ff;
+    --text:    #081018;
+    --red:     #0088aa;
+    --red-light: #00b4d8;
+}
+&lt;/style&gt;</code></pre>
+            </div>
+
+            <h3>Change the storage key</h3>
+
+            <p>
+                By default the theme preference is stored under
+                <code>auto-theme</code> in <code>localStorage</code>. To avoid
+                collisions with other scripts on the same origin, override
+                the key <em>before</em> loading the file:
+            </p>
+
+            <div data-code>
+                <pre><code>&lt;script&gt;window.AUTO_THEME_KEY = "my-site-theme";&lt;/script&gt;
+&lt;script src="auto-theme.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
+
+            <p>
+                <small>
+                    Note: this requires a one-line change in
+                    <code>auto-theme.js</code> if you want the value read from
+                    <code>window.AUTO_THEME_KEY</code>. The default
+                    <code>STORAGE_KEY</code> constant is at the top of the file.
+                </small>
+            </p>
+
+            <h3>Disable the floating toggle</h3>
+
+            <p>
+                If you'd rather call <code>AutoTheme.toggle()</code> from your
+                own UI, remove the auto-created button:
+            </p>
+
+            <div data-code>
+                <pre><code>document.addEventListener("DOMContentLoaded", () =&gt; {
+    document.querySelector('[data-ui="theme-toggle"]')?.remove();
+});</code></pre>
+            </div>
+
+            <h3>Playing nice with existing CSS</h3>
+
+            <p>
+                The injected stylesheet uses <strong>low specificity</strong>
+                — one type selector or one <code>[data-ui]</code> attribute.
+                Your own rules like <code>.my-button { … }</code> will win
+                without <code>!important</code> as long as they load after
+                <code>auto-theme.js</code>. If they load before, add
+                <code>!important</code> or increase specificity with a parent
+                selector.
+            </p>
+        </section>
+
+
+        <!-- ============ LIVE DEMO ============ -->
+        <section id="demo">
+            <span>LIVE DEMO</span>
+            <h2>Everything, styled live</h2>
+
+            <p>
+                This section is styled by the very script this page documents.
+                Resize the window, switch themes, open the dialog — it all
+                works with zero classes.
+            </p>
+
+            <h3>Buttons</h3>
+
+            <div>
+                <button type="button">Primary button</button>
+                <button type="button" data-variant="secondary">Secondary</button>
+                <a href="#" role="button">Link-style button</a>
+                <a href="#" download>Download link</a>
+            </div>
+
+            <h3>Cards in an auto-grid</h3>
+
+            <p>
+                This wrapper <code>&lt;div&gt;</code> contains only
+                <code>&lt;article&gt;</code> elements — the classifier
+                automatically gave it <code>data-ui="grid"</code>.
+            </p>
+
+            <div>
+                <article>
+                    <h4>Parsyu</h4>
+                    <p>Persian-first online utilities.</p>
+                </article>
+                <article>
+                    <h4>Drift Multiplayer</h4>
+                    <p>Browser-based 3D driving experiment.</p>
+                </article>
+                <article>
+                    <h4>Persian Assistant</h4>
+                    <p>Local LLM and voice experiments.</p>
+                </article>
+                <article>
+                    <h4>Arduino &amp; IoT</h4>
+                    <p>Electronics, sensors, and microcontrollers.</p>
+                </article>
+            </div>
+
+            <h3>Form</h3>
+
+            <form onsubmit="event.preventDefault(); alert('Submitted (demo only).');">
+                <div>
+                    <label for="f-name">Your name</label>
+                    <input id="f-name" type="text" placeholder="Jane Doe" required>
+                </div>
+                <div>
+                    <label for="f-email">Email</label>
+                    <input id="f-email" type="email" placeholder="jane@example.com" required>
+                </div>
+                <div>
+                    <label for="f-message">Message</label>
+                    <textarea id="f-message" placeholder="Say hi…"></textarea>
+                </div>
+                <button type="submit">Send</button>
+            </form>
+
+            <h3>Dialog</h3>
+
+            <p>
+                Native <code>&lt;dialog&gt;</code> elements are detected and
+                styled with a blurred backdrop automatically.
+            </p>
+
+            <div>
+                <button type="button" onclick="document.getElementById('doc-dialog').showModal()">
+                    Open dialog
+                </button>
+            </div>
+
+            <h3>Table, code, details</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Auto element classification</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Dark / light / system theme</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Persisted via localStorage</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>MutationObserver for new DOM</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Reduced-motion support</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Zero dependencies</td>
+                        <td>✓</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <details>
+                <summary>Why is there no styles.css file?</summary>
+                <p>
+                    Because <code>auto-theme.js</code> <em>is</em> the
+                    stylesheet — it injects a <code>&lt;style&gt;</code>
+                    block on load. You still get to customize everything
+                    through CSS variables.
+                </p>
+            </details>
+        </section>
+
+
+        <!-- ============ FAQ ============ -->
+        <section id="faq">
+            <span>FAQ</span>
+            <h2>Questions you might ask</h2>
+
+            <details>
+                <summary>Does it work without JavaScript enabled?</summary>
+                <p>
+                    No styling is applied at all — the page falls back to the
+                    browser's default rendering. Everything lives inside the
+                    injected <code>&lt;style&gt;</code>.
+                </p>
+            </details>
+
+            <details>
+                <summary>Can I use it with Tailwind, Bootstrap, etc.?</summary>
+                <p>
+                    Yes. Both libraries manipulate the DOM without removing
+                    your <code>data-ui</code> attributes. To keep the
+                    libraries from fighting, either load
+                    <code>auto-theme.js</code> <em>after</em> the framework,
+                    or disable one of them per-page.
+                </p>
+            </details>
+
+            <details>
+                <summary>Will it break my existing classes and IDs?</summary>
+                <p>
+                    Never. It only <strong>adds</strong>
+                    <code>data-ui</code> attributes. Your IDs, classes, event
+                    handlers, and form values are untouched.
+                </p>
+            </details>
+
+            <details>
+                <summary>What about accessibility?</summary>
+                <p>
+                    Semantic tags are preserved, focus styles come from
+                    <code>:focus-visible</code>, the theme toggle has an
+                    <code>aria-label</code>, ambient and noise layers are
+                    <code>aria-hidden</code>, and it respects
+                    <code>prefers-reduced-motion</code> and
+                    <code>prefers-color-scheme</code>.
+                </p>
+            </details>
+
+            <details>
+                <summary>Browser support?</summary>
+                <p>
+                    Modern evergreen browsers (Chrome, Edge, Firefox, Safari
+                    15+). Uses <code>color-mix()</code>,
+                    <code>:focus-visible</code>, and <code>dialog</code>.
+                    On older browsers it degrades gracefully — you still get
+                    the layout and base colors, just without some of the
+                    polish.
+                </p>
+            </details>
+
+            <details>
+                <summary>How big is the injected CSS?</summary>
+                <p>
+                    About 12 KB unminified, ~3 KB gzipped. The entire
+                    library is a single file, so there are no extra network
+                    requests.
+                </p>
+            </details>
+        </section>
+
+    </main>
+
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <span>© 2026 · auto-theme.js</span>
+        <a href="#top">Back to top ↑</a>
+    </footer>
+
+
+    <!-- ============ DIALOG ============ -->
+    <dialog id="doc-dialog">
+        <h3>You found the modal</h3>
+        <p>
+            This <code>&lt;dialog&gt;</code> was detected and styled with
+            no classes. The backdrop has a <code>backdrop-filter: blur(8px)</code>
+            and the panel has a soft shadow + rounded corners.
+        </p>
+        <button type="button" onclick="this.closest('dialog').close()">
+            Close
+        </button>
+    </dialog>
+
+
+    <!-- ============ DOC-ONLY: copy buttons ============ -->
+    <script>
+        document.querySelectorAll("[data-code]").forEach(block => {
+            const pre = block.querySelector("pre");
+            if (!pre) return;
+
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = "Copy";
+
+            btn.addEventListener("click", () => {
+                const code = pre.querySelector("code") || pre;
+                const text = code.textContent;
+
+                const done = () => {
+                    btn.textContent = "Copied";
+                    btn.setAttribute("data-copied", "");
+                    setTimeout(() => {
+                        btn.textContent = "Copy";
+                        btn.removeAttribute("data-copied");
+                    }, 1500);
+                };
+
+                if (navigator.clipboard?.writeText) {
+                    navigator.clipboard.writeText(text).then(done).catch(() => {
+                        btn.textContent = "Failed";
+                        setTimeout(() => (btn.textContent = "Copy"), 1500);
+                    });
+                } else {
+                    // Fallback for non-secure contexts
+                    const ta = document.createElement("textarea");
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand("copy"); done(); }
+                    catch { /* ignore */ }
+                    ta.remove();
+                }
+            });
+
+            block.appendChild(btn);
+        });
+    </script>
+
+</body>
+
+</html>
